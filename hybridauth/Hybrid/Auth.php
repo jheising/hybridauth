@@ -201,6 +201,7 @@ class Hybrid_Auth
 	* $params is generally an array with required info in order for this provider and HybridAuth to work,
 	*  like :
 	*          hauth_return_to: URL to call back after authentication is done
+     *          auto_redirect: Set to false if you want to handle the redirection to the login site yourself. Set to true by default.
 	*        openid_identifier: The OpenID identity provider identifier
 	*           google_service: can be "Users" for Google user accounts service or "Apps" for Google hosted Apps
 	*/
@@ -214,7 +215,12 @@ class Hybrid_Auth
 
 			$provider_adapter = Hybrid_Auth::setup( $providerId, $params );
 
-			$provider_adapter->login();
+            $provider_adapter->login();
+
+            if (array_key_exists("auto_redirect", $params) && $params["auto_redirect"] === false)
+            {
+                return $provider_adapter;
+            }
 		}
 
 		// else, then return the adapter instance for the given provider
