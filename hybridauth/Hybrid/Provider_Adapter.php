@@ -146,7 +146,7 @@ class Hybrid_Provider_Adapter
         }
 	}
 
-    public function getLoginStartURL()
+    public function getRedirectURL()
     {
         return $this->params["login_start"];
     }
